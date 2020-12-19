@@ -6,8 +6,7 @@
 <h1>{{post.title}}</h1>
 
 <small>By:
-    {{ post.author.first_name }}
-    {{ post.author.last_name }} -
+    {{ post.author }} -
     {{ post.post_date }}
     {% if user.is_authenticated %}
     - <a href="{% url 'update_post' post.pk %}">(Edit Blog)</a>
@@ -18,7 +17,7 @@
 <br/>
 <hr>
 <br/>
-{{ post.body }}
+{{ post.body|safe }}
 
 <br/><br/>
 <a href="{% url 'home' %}" class="btn btn-primary">Back</a>
