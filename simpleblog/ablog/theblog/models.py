@@ -12,6 +12,19 @@ class Category(models.Model):
     def get_absolute_url(self):
         return reverse('home')
 
+    def add_row(self, name):
+        if not Category.objects.filter(name=name):
+            Category.objects.create(name=name)
+            return True
+
+    def load_data(self):
+        rows = list()
+        rows.append(self.add_row("uncategorized"))
+        rows.append(self.add_row("coding"))
+        rows.append(self.add_row("sports"))
+        rows.append(self.add_row("entertainment"))
+        return all(rows)
+
 
 class Post(models.Model):
     title = models.CharField(max_length=255)

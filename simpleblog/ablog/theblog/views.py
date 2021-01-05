@@ -11,13 +11,29 @@ class HomeView(ListView):
     template_name = 'home.html'
     ordering = ["-post_date"]
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(HomeView, self).get_context_data(**kwargs)
+        category_names = Category.objects.all()
+        context['category_list'] = category_names
+        return context
+
+# def CategoryView(request, cats):
+#     category_posts = Post.objects.filter(category=cats)
+#     return render(request, 'categories.html', {'cats': cats, 'category_posts': category_posts})
+
 
 class PostCategoryView(ListView):
     model = Post
     template_name = 'categories.html'
 
     def get_queryset(self):
-        return Post.objects.filter(category=self.kwargs.get('category'))
+        category_name = self.kwargs.get('category')
+        return Post.objects.filter(category=str(category_name).replace('-', ' '))
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(PostCategoryView, self).get_context_data(**kwargs)
+        context['category_name'] = str(self.kwargs.get('category')).replace('-', ' ')
+        return context
 
 
 class ArticleDetailView(DetailView):
