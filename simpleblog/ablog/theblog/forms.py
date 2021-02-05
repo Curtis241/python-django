@@ -2,7 +2,6 @@ from django import forms
 
 from .models import Post, Category
 
-
 choices = Category.objects.all().values_list('name', 'name')
 
 choice_list = list()

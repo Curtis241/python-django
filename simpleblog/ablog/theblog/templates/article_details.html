@@ -2,25 +2,26 @@
 {% block title %}{{post.title_tag}}{% endblock %}
 
 {% block content %}
-
-<h1>{{post.title}}</h1>
-
-<small>By:
-    {{ post.author }} -
-    {{ post.post_date }} -
-    {{ post.category }}
+<div class="container">
+    <br/>
+    <h3>{{post.title}}</h3>
+</div>
+<div class="container">
+    <small>
+        By: {{ post.author }},
+        Date: {{ post.post_date }},
+        Category: {{ post.category }}
+    </small>
     {% if user.is_authenticated %}
-    - <a href="{% url 'update_post' post.pk %}">(Edit Blog)</a>
-    <a href="{% url 'delete_post' post.pk %}">(Delete Blog)</a>
+    <br/>
+    <div class="btn-group">
+        <a href="{% url 'update_post' post.pk %}"><i class="pencil-square"></i></a>
+        <a href="{% url 'delete_post' post.pk %}"><i class="trash-fill"></i></a>
+    </div>
     {% endif %}
-
-</small>
-<br/>
-<hr/>
-<br/>
-{{ post.body|safe }}
-<br/><br/><hr/>
-
-<a href="{% url 'home' %}" class="btn btn-primary">Back</a>
-
+    <hr/>
+    {{ post.body|safe }}
+    <hr/>
+    <a href="{% url 'home' %}" class="btn btn-primary">Back</a>
+</div>
 {% endblock %}
